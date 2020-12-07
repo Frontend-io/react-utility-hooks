@@ -1,24 +1,15 @@
 import { useState, useEffect } from 'react';
-import { useToast } from '@chakra-ui/core';
 import { useLazyQuery } from '@apollo/client';
 
 const useFilters = ({ query, retainResultOnClear = false, variables = {} }) => {
   const useSearchQuery = options => useLazyQuery(query, options);
-  const toast = useToast();
   const [searchResult, setSearchResult] = useState(null);
   const [canSearch, setCanSearch] = useState(false);
   const [whatSearching, setWhatsearching] = useState('');
   const [isSearching, setIsSearching] = useState({});
 
   const [onSearch, { data, loading }] = useSearchQuery({
-    onError: err =>
-      toast({
-        position: 'top-right',
-        title: err.message,
-        status: 'error',
-        duration: 3000,
-        isClosable: true
-      })
+    onError: err => console.log(err.message) //Use a toast component to alert your errors
   });
 
   const setFilter = payload => {
